@@ -6,5 +6,5 @@ then
   /usr/bin/wine /root/.wine/drive_c/Program\ Files/DTN/IQFeed/iqconnect.exe -autoconnect
 else
 	echo "$iqconnect_exe not found. launcing iqfeed client installer"
-  /usr/bin/wine /root/iqfeed_client_5_2_5_0.exe
+  /usr/bin/wine /root/iqfeed_client_5_2_6_0.exe
 fi
