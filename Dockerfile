@@ -9,7 +9,7 @@ ENV LANGUAGE en_US.UTF-8
 ENV WINEARCH win32
 ENV DISPLAY :0
 ENV WINE_MONO_VERSION 4.5.6
-ENV IQFEED_INSTALLER="iqfeed_client_5_2_5_0.exe"
+ENV IQFEED_INSTALLER="iqfeed_client_5_2_6_0.exe"
 ENV WINEPREFIX /root/.wine
 
 # Updating and upgrading a bit.
