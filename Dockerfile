@@ -15,15 +15,11 @@ ENV WINEPREFIX /root/.wine
 # Updating and upgrading a bit.
 	# Install vnc, window manager and basic tools
 RUN apt-get update && \
-	apt-get install -y --no-install-recommends  && \
   apt-get install -y git curl x11vnc xdotool supervisor fluxbox net-tools nodejs &&\
 	dpkg --add-architecture i386 && \
 # We need software-properties-common to add ppas.
-	apt-get install -y --no-install-recommends software-properties-common
-
-	#apt-get install -y --no-install-recommends software-properties-common && \
-RUN curl -fsSL https://dl.winehq.org/wine-builds/Release.key | apt-key add - && \
-	apt-get install -y apt-transport-https && \
+	apt-get install -y --no-install-recommends software-properties-common apt-transport-https && \
+	curl -fsSL https://dl.winehq.org/wine-builds/Release.key | apt-key add - && \
 	apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/ && \
   apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ xenial main' && \
 	apt-get update && \
