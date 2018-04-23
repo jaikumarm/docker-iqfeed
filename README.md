@@ -11,7 +11,7 @@ Usage
 -----
 
 ```
-docker run -e LOGIN=<your iqfeed login> -e PASSWORD=<your iqfeed password> -p 5009:5010 -p 8081:8081 -p 9100:9101 jaikumarm/iqfeed:v5270
+docker run -e IQFEED_LOGIN=<your iqfeed login> -e IQFEED_PASSWORD=<your iqfeed password> -p 5009:5010 -p 8081:8081 -p 9100:9101 jaikumarm/iqfeed:v5270
 ```
 
 In docker logs of the container and you should see
