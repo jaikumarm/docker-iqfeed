@@ -15,8 +15,8 @@ var portMap = {
 var config = {
 	appName: process.env.APP_NAME || "MATLAB_1694",
 	appVersion: process.env.APP_VERSION || "1.0",
-	login: process.env.LOGIN,
-	password: process.env.PASSWORD
+	login: process.env.IQFEED_LOGIN,
+	password: process.env.IQFEED_PASSWORD
 };
 
 Object.keys(portMap).forEach(function(port) {
@@ -80,7 +80,7 @@ function startIqFeed() {
                     console.log("Sending 'connect' command.");
                     socket.write("S,CONNECT\r\n");
                 }
-		console.log(data.toString ? data.toString().replace(/[\r\n]+/, '') : data);
+		//console.log(data.toString ? data.toString().replace(/[\r\n]+/, '') : data);
 	});
 }
 startIqFeed();

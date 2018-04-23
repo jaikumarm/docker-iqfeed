@@ -1,65 +1,79 @@
 FROM ubuntu:16.04
 
 # Set correct environment variables
-ENV HOME /root
-ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
-ENV WINEARCH win32
 ENV DISPLAY :0
-ENV WINE_MONO_VERSION 4.5.6
-ENV IQFEED_INSTALLER="iqfeed_client_5_2_6_0.exe"
-ENV WINEPREFIX /root/.wine
+ENV IQFEED_INSTALLER_BIN="iqfeed_client_5_2_7_0.exe"
+
+# Creating the wine user and setting up dedicated non-root environment: replace 1001 by your user id (id -u) for X sharing.
+RUN useradd -u 1001 -d /home/wine -m -s /bin/bash wine
+ENV HOME /home/wine
+WORKDIR /home/wine
+
+# Setting up the wineprefix to force 32 bit architecture.
+ENV WINEPREFIX /home/wine/.wine
+ENV WINEARCH win32
+
+# Disabling warning messages from wine, comment for debug purpose.
+ENV WINEDEBUG -all
+
+# We don't want any interaction from package installation during the docker image building.
+ENV DEBIAN_FRONTEND noninteractive
+
+# We want the 32 bits version of wine allowing winetricks.
+RUN	dpkg --add-architecture i386 && \
 
 # Updating and upgrading a bit.
-	# Install vnc, window manager and basic tools
-RUN apt-get update && \
-  apt-get install -y git curl x11vnc xdotool supervisor fluxbox net-tools nodejs &&\
-	dpkg --add-architecture i386 && \
-# We need software-properties-common to add ppas.
-	apt-get install -y --no-install-recommends software-properties-common apt-transport-https && \
-	curl -fsSL https://dl.winehq.org/wine-builds/Release.key | apt-key add - && \
-	apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/ && \
-  apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ xenial main' && \
 	apt-get update && \
-	apt-get install -y --no-install-recommends apt-transport-https winehq-stable cabextract unzip p7zip zenity xvfb && \
-	curl -SL https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks  -o /usr/local/bin/winetricks && \
+	apt-get upgrade -y && \
+
+# We need software-properties-common to add ppas and wget and apt-transport-https to add repositories and their keys.
+	apt-get install -y --no-install-recommends software-properties-common apt-transport-https wget && \
+
+# Adding x11vnc, supervisor and nodejs
+	apt-get install -y --no-install-recommends curl x11vnc xdotool supervisor fluxbox net-tools nodejs &&\
+
+# Adding required ppas: graphics drivers and wine.
+	wget -nc https://dl.winehq.org/wine-builds/Release.key && apt-key add Release.key && add-apt-repository https://dl.winehq.org/wine-builds/ubuntu/ && \
+	apt-get update && \
+
+# Installation of wine, winetricks and its utilities and temporary xvfb to install latest winetricks and its tricks during docker build.
+	apt-get install -y --no-install-recommends winehq-stable cabextract unzip p7zip zenity xvfb && \
+	wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && \
+	chmod +x winetricks && \
+	mv winetricks /usr/local/bin && \
+
 # Installation of winbind to stop ntlm error messages.
-	apt-get install -y --no-install-recommends winbind &&\
-# Get latest version of mono for wine
-	mkdir -p /usr/share/wine/mono && \
-	curl -SL 'http://sourceforge.net/projects/wine/files/Wine%20Mono/$WINE_MONO_VERSION/wine-mono-$WINE_MONO_VERSION.msi/download' -o /usr/share/wine/mono/wine-mono-$WINE_MONO_VERSION.msi && \
-  chmod +x /usr/share/wine/mono/wine-mono-$WINE_MONO_VERSION.msi &&\
-	mkdir -p /usr/share/wine/gecko && \
-  curl -SL 'http://dl.winehq.org/wine/wine-gecko/2.40/wine_gecko-2.40-x86.msi' -o /usr/share/wine/gecko/wine_gecko-2.40-x86.msi &&\
+	apt-get install -y --no-install-recommends winbind && \
+
+# Installation of p11 to stop p11 kit error messages.
+	apt-get install -y --no-install-recommends p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 && \
+
+# Installation of winetricks' tricks as wine user, comment if not needed.
+	su -p -l wine -c 'winecfg && wineserver --wait' && \
+	su -p -l wine -c 'winetricks -q winxp && wineserver --wait' && \
+	
 # Cleaning up.
-	apt-get autoremove -y --purge software-properties-common && \
-  apt-get autoremove -y --purge && \
-  apt-get clean -y && \
-  rm -rf /home/wine/.cache && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+	apt-get autoremove -y --purge && \
+	apt-get clean -y && \
+	rm -rf /home/wine/.cache && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-## Add novnc
-RUN cd /root && git clone https://github.com/kanaka/noVNC.git && \
-  cd noVNC/utils && git clone https://github.com/kanaka/websockify websockify &&\
-	cd /root/noVNC && ln -s vnc_auto.html index.html
-
-WORKDIR /root/
+# Download and save IQFEED Installer
+RUN curl -SL http://www.iqfeed.net/$IQFEED_INSTALLER_BIN -o /home/wine/.wine/drive_c/$IQFEED_INSTALLER_BIN
 
 # Add supervisor conf
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD iqfeed_startup.sh /home/wine/iqfeed_startup.sh
+RUN chmod +x /home/wine/iqfeed_startup.sh
 
-RUN curl -SL http://www.iqfeed.net/$IQFEED_INSTALLER -o /root/$IQFEED_INSTALLER
-
-ADD iqfeed_startup.sh /root/iqfeed_startup.sh
-RUN chmod +x /root/iqfeed_startup.sh
 # Add iqfeed proxy app
-ADD app /root/app
+ADD app /home/wine/app
 
-ENV WINEPREFIX /root/.wine
 CMD ["/usr/bin/supervisord"]
 # Expose Ports
 EXPOSE 9101
-EXPOSE 8081
 EXPOSE 5010
+EXPOSE 5901
