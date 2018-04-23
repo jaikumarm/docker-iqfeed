@@ -11,7 +11,30 @@ Usage
 ```
 docker run -e LOGIN=<your iqfeed login> -e PASSWORD=<your iqfeed password> -p 5009:5010 -p 8081:8081 -p 9100:9101 jaikumarm/iqfeed:v5270
 ```
+See docker logs and you should see 
+```
+...
+2018-04-22 03:42:02,004 INFO spawned: 'fluxbox' with pid 11
+/home/wine/.wine/drive_c/Program Files/DTN/IQFeed/iqconnect.exe not found. launcing iqfeed client installer
+22/04/2018 03:42:02 passing arg to libvncserver: -rfbport
+22/04/2018 03:42:02 passing arg to libvncserver: 5901
+...
+Disconnected. Reconnecting in 1 second.
+/home/wine/.wine/drive_c/Program Files/DTN/IQFeed/iqconnect.exe found. installer succeeded, launcing iqfeed client..
+Connecting to port  9300
+Disconnected. Reconnecting in 1 second.
+2018-04-22 03:42:52,506 INFO reaped unknown pid 128
+Connecting to port  9300
+Disconnected. Reconnecting in 1 second.
+Connecting to port  9300
+Connected.
+```
 
-This is fairly a opinionated configuration based on my own setup, and most of the code is borrowed or inspired from
-https://github.com/bratchenko/docker-iqfeed and https://github.com/solarkennedy/wine-x11-novnc-docker
+If you see `Connected." it means it all good. You can also uncomment line 83 in app/proxy.js which will print every strig recevied on the socket data port, very very chatty. 
+
+
+This is fairly a opinionated configuration based on my own needs, if you dont like it fork it!
+
+And some of the code is borrowed and/or inspired from
+https://github.com/bratchenko/docker-iqfeed and https://github.com/webanck/docker-wine-steam
 
