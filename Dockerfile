@@ -30,17 +30,17 @@ RUN	dpkg --add-architecture i386 && \
 	apt-get upgrade -y && \
 
 # We need software-properties-common to add ppas and wget and apt-transport-https to add repositories and their keys.
-	apt-get install -y --no-install-recommends software-properties-common apt-transport-https wget && \
+	apt-get install -y --no-install-recommends software-properties-common apt-transport-https wget unzip curl sudo vim && \
 
 # Adding x11vnc, supervisor and nodejs
-	apt-get install -y --no-install-recommends curl x11vnc xdotool supervisor fluxbox net-tools xterm nodejs &&\
+	apt-get install -y --no-install-recommends xvfb x11vnc xdotool supervisor fluxbox xterm net-tools nodejs &&\
 
 # Adding required ppas: graphics drivers and wine.
 	wget -nc https://dl.winehq.org/wine-builds/Release.key && apt-key add Release.key && add-apt-repository https://dl.winehq.org/wine-builds/ubuntu/ && \
 	apt-get update && \
 
 # Installation of wine, winetricks and its utilities and temporary xvfb to install latest winetricks and its tricks during docker build.
-	apt-get install -y --no-install-recommends winehq-stable cabextract unzip p7zip zenity xvfb && \
+	apt-get install -y --no-install-recommends winehq-stable cabextract p7zip zenity && \
 	wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && \
 	chmod +x winetricks && \
 	mv winetricks /usr/local/bin && \
@@ -66,11 +66,17 @@ RUN curl -SL http://www.iqfeed.net/$IQFEED_INSTALLER_BIN -o /home/wine/.wine/dri
 
 # Add supervisor conf
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD iqfeed_startup.sh /home/wine/iqfeed_startup.sh
-RUN chmod +x /home/wine/iqfeed_startup.sh
 
 # Add iqfeed proxy app
 ADD app /home/wine/app
+ADD iqfeed_startup.sh /home/wine/iqfeed_startup.sh
+
+RUN \
+	usermod -aG sudo wine && \
+	echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+	chmod +x /home/wine/iqfeed_startup.sh && \
+	chown -R wine:wine /home/wine/*.*
+
 
 CMD ["/usr/bin/supervisord"]
 # Expose Ports

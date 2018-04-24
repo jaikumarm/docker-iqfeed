@@ -61,6 +61,7 @@ function startIqFeed() {
 
 	var socket = net.createConnection(port);
 	socket.on('error', function(err) {
+		console.log("Error.. ", err);
 	});
 	socket.on('close', function() {
 		console.log("Disconnected. Reconnecting in 1 second.");
