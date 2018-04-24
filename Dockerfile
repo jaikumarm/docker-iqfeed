@@ -33,7 +33,7 @@ RUN	dpkg --add-architecture i386 && \
 	apt-get install -y --no-install-recommends software-properties-common apt-transport-https wget && \
 
 # Adding x11vnc, supervisor and nodejs
-	apt-get install -y --no-install-recommends curl x11vnc xdotool supervisor fluxbox net-tools nodejs &&\
+	apt-get install -y --no-install-recommends curl x11vnc xdotool supervisor fluxbox net-tools xterm nodejs &&\
 
 # Adding required ppas: graphics drivers and wine.
 	wget -nc https://dl.winehq.org/wine-builds/Release.key && apt-key add Release.key && add-apt-repository https://dl.winehq.org/wine-builds/ubuntu/ && \
