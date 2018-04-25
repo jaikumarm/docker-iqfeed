@@ -28,7 +28,7 @@ Object.keys(portMap).forEach(function(port) {
 			connection.destroy();
 		});
 		socket.on('error', function(err) {
-			console.error(err);
+			console.error('socket error', err);
 		});
 		socket.on('data', function(data) {
 			if (connected) {
@@ -42,7 +42,7 @@ Object.keys(portMap).forEach(function(port) {
 			connection.write(beforeConnectedBuffer);
 		});
 		connection.on('error', function(err) {
-			console.error(err);
+			console.error('connection error', err);
 			connection.unpipe(socket);
 			connection.destroy();
 			socket.end();
@@ -62,10 +62,11 @@ function startIqFeed() {
 	var socket = net.createConnection(port);
 	socket.on('error', function(err) {
 		console.log("Error.. ", err);
+		
 	});
 	socket.on('close', function() {
-		console.log("Disconnected. Reconnecting in 1 second.");
-		setTimeout(startIqFeed, 1000);
+		console.log("Disconnected. Reconnecting in 5 second.");
+		setTimeout(startIqFeed, 5000);
 	});
 	socket.on('connect', function() {
 		console.log("Connected.");

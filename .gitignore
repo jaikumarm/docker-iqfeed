@@ -69,6 +69,8 @@ dockerspawner.tar.gz
 
 # Secrets
 secrets.py
+passwords.py
 secrets.js
 .secrets.py
+.passwords.py
 .secrets.js
