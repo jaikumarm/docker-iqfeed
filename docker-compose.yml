@@ -6,6 +6,7 @@ services:
      - "5009:5010"
      - "5901:5901"     
      - "9100:9101"
+     - "9300:9301"
     environment:
       IQFEED_LOGIN: "CHANGEME"
       IQFEED_PASSWORD: "CHANGEME"
