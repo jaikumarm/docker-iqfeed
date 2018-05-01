@@ -8,5 +8,6 @@ services:
      - "9100:9101"
      - "9300:9301"
     environment:
+      IQFEED_PRODUCT_ID: "CHANGEME"
       IQFEED_LOGIN: "CHANGEME"
       IQFEED_PASSWORD: "CHANGEME"

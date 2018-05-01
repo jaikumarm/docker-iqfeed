@@ -37,7 +37,9 @@ import time
 import argparse
 import pyiqfeed as iq
 
-from passwords import dtn_product_id, dtn_login, dtn_password
+dtn_product_id = os.environ["IQFEED_PRODUCT_ID"]
+dtn_login = os.environ["IQFEED_LOGIN"]
+dtn_password = os.environ["IQFEED_PASSWORD"]
 
 if __name__ == "__main__":
 
@@ -68,7 +70,7 @@ if __name__ == "__main__":
 
     # Modify code below to connect to the socket etc as described above
     admin = iq.AdminConn(name="Launcher")
-    admin_listener = iq.VerboseAdminListener("Launcher-listen")
+    admin_listener = iq.SilentAdminListener("Launcher-listen")
     admin.add_listener(admin_listener)
     with iq.ConnConnector([admin]) as connected:
         admin.client_stats_on()

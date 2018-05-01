@@ -66,8 +66,8 @@ ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN git clone https://github.com/jaikumarm/pyiqfeed.git && \
     cd pyiqfeed && \
     python3 setup.py install && \
-    cd ..
-ADD passwords.py /home/wine/pyiqfeed/passwords.py
+    cd .. && rm -rf pyiqfeed
+ADD launch_iqfeed.py /home/wine/launch_iqfeed.py
 
 # Add iqfeed proxy app
 ADD app /home/wine/app
