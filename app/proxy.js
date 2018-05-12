@@ -56,6 +56,7 @@ Object.keys(portMap).forEach(function(port) {
 /*
 We need to connect IQFeed to servers by passing 'connect' command to it.
 */
+/*
 function startIqFeed() {
 	var port = 9300; // IQFeed admin port
 
@@ -87,4 +88,6 @@ function startIqFeed() {
 		//console.log(data.toString ? data.toString().replace(/[\r\n]+/, '') : data);
 	});
 }
+
 startIqFeed();
+*/
