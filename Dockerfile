@@ -75,6 +75,8 @@ RUN git clone https://github.com/jaikumarm/pyiqfeed.git && \
     python3 setup.py install && \
     cd .. && rm -rf pyiqfeed
 ADD launch_iqfeed.py /home/wine/launch_iqfeed.py
+ADD pyiqfeed_admin_conn.py /home/wine/pyiqfeed_admin_conn.py
+ADD is_iqfeed_running.py /home/wine/is_iqfeed_running.py
 
 # Add iqfeed proxy app
 ADD app /home/wine/app
