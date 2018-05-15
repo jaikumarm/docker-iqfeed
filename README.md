@@ -6,35 +6,39 @@ See [CHANGELOG](./CHANGELOG.md) for a list of notables changes
 Usage
 -----
 
+With `docker run`
+```
+docker run -e IQFEED_PRODUCT_ID=CHANGEME \
+    -e IQFEED_LOGIN=CHANGEME \
+    -e IQFEED_PASSWORD=CHANGEME \
+    -p 5009:5010 -p 5901:5901 -p 9100:9101 \
+    -v /var/log/iqfeed:/home/wine/DTN/IQFeed \
+    -d jaikumarm/iqfeed:v6002
+```
+
+With `docker-compose` edit the docker-compose.yml with your iqfeed credentials, then run
+```
+docker-compose -f docker-compose.yml up -d
 
 ```
-docker run -e IQFEED_PRODUCT_ID=<your iqfeed product id> \
-    -e IQFEED_LOGIN=<your iqfeed login> \
-    -e IQFEED_PASSWORD=<your iqfeed password> \
-    -p 5009:5010 -p 5901:5901 -p 9100:9101 \
-    jaikumarm/iqfeed:v6002
-```
+
 
 In docker logs of the container and you should see
 ```
 ...
-2018-04-22 03:42:02,004 INFO spawned: 'fluxbox' with pid 11
-/home/wine/.wine/drive_c/Program Files/DTN/IQFeed/iqconnect.exe not found. launcing iqfeed client installer
-22/04/2018 03:42:02 passing arg to libvncserver: -rfbport
-22/04/2018 03:42:02 passing arg to libvncserver: 5901
-...
-Disconnected. Reconnecting in 1 second.
-/home/wine/.wine/drive_c/Program Files/DTN/IQFeed/iqconnect.exe found. installer succeeded, launcing iqfeed client..
-Connecting to port  9300
-Disconnected. Reconnecting in 1 second.
-2018-04-22 03:42:52,506 INFO reaped unknown pid 128
-Connecting to port  9300
-Disconnected. Reconnecting in 1 second.
-Connecting to port  9300
-Connected.
+2018-05-15 23:05:27,462 INFO success: fluxbox entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-05-15 23:05:27,462 INFO success: xvfb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-05-15 23:05:27,463 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-05-15 23:05:27,464 INFO success: pyiqfeed-admin-conn entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-05-15 23:05:27,464 INFO success: wine-iqfeed-startup entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-05-15 23:05:27,464 INFO success: iqfeed-proxy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2018-05-15 23:05:27,858 INFO reaped unknown pid 32
+2018-05-15 23:05:47,284 INFO pyiqfeed_admin_conn.<module>.140:  iqfeed service connected.
 ```
 
-If you see `Connected.` it means it all good. You can also uncomment line 83 in app/proxy.js which will print every string recevied on the socket data port, very very chatty. 
+If you see `iqfeed service connected.` it means it all good. 
+
+You can also see a very chatty version of whats going on with iqfeed client if you tail `/var/log/iqfeed/IQConnectLog.txt` or `/var/log/iqfeed/pyiqfeed-admin-conn.log`. 
 
 
 This is fairly a opinionated configuration based on my own needs, if you dont like it fork it!

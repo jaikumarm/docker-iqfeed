@@ -44,7 +44,7 @@ from typing import Sequence
 import argparse
 import pyiqfeed as iq
 
-log_filename = "/var/log/distdnd/pyiqfeed-admin-conn.log"
+log_filename = "/home/wine/DTN/IQFeed/pyiqfeed-admin-conn.log"
 
 logging.basicConfig(filename=log_filename,
                     level=logging.DEBUG,
@@ -134,11 +134,11 @@ if __name__ == "__main__":
             admin_conn.add_listener(admin_listener)
             with iq.ConnConnector([admin_conn]) as connected:
                 if not iq.service._is_iqfeed_running():
-                    logging.info("iqfeed service connection reset")
+                    logging.info("iqfeed service stopped, exiting..")
                     break
                 #admin_conn.client_stats_off()
-                #logging.info("iqfeed service connected.")
-                time.sleep(30)
+                logging.info("iqfeed service running.")
+                time.sleep(300)
         else:
-            logging.info("iqfeed service not connected.")
+            logging.info("iqfeed service not running.")
             time.sleep(15)
