@@ -1,7 +1,7 @@
 Dockerized IQFeed client with X11VNC for remote viewing
 =======================
 
-See [CHANGELOG](./CHANGELOG.md) for a list of notables changes
+See [CHANGELOG](./CHANGELOG.md) for a list of notable changes
 
 Usage
 -----
@@ -34,6 +34,7 @@ In docker logs of the container and you should see
 2018-05-15 23:05:27,464 INFO success: iqfeed-proxy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2018-05-15 23:05:27,858 INFO reaped unknown pid 32
 2018-05-15 23:05:47,284 INFO pyiqfeed_admin_conn.<module>.140:  iqfeed service connected.
+...
 ```
 
 If you see `iqfeed service connected.` it means it all good. 
