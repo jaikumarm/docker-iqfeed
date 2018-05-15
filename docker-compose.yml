@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   iqfeed:
-    image: jaikumarm/iqfeed:v5270
+    image: jaikumarm/iqfeed:v6002
     ports:
      - "5009:5010"
      - "5901:5901"     
@@ -11,3 +11,11 @@ services:
       IQFEED_PRODUCT_ID: "CHANGEME"
       IQFEED_LOGIN: "CHANGEME"
       IQFEED_PASSWORD: "CHANGEME"
+    volumes:
+      - /var/log/iqfeed:/home/wine/DTN/IQFeed      
+    healthcheck:
+      test: ["CMD", "python3", "/home/wine/is_iqfeed_running.py"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 1m

@@ -1,17 +1,18 @@
 Dockerized IQFeed client with X11VNC for remote viewing
 =======================
 
-Update: APR 2018
------
-
-* Remove novnc and instead use x11vnc for remote viewing and also full rewrite of the Dockerfile to cleanup and reduce container size.
-* Also no need to connect to the container to initiate IQFeed Client installer, IQFeed Client launcher script will install client if it is not able to find the client binary.
+See [CHANGELOG](./CHANGELOG.md) for a list of notables changes
 
 Usage
 -----
 
+
 ```
-docker run -e IQFEED_PRODUCT_ID=<your iqfeed product id> -e IQFEED_LOGIN=<your iqfeed login> -e IQFEED_PASSWORD=<your iqfeed password> -p 5009:5010 -p 5901:5901 -p 9100:9101 jaikumarm/iqfeed:v5270
+docker run -e IQFEED_PRODUCT_ID=<your iqfeed product id> \
+    -e IQFEED_LOGIN=<your iqfeed login> \
+    -e IQFEED_PASSWORD=<your iqfeed password> \
+    -p 5009:5010 -p 5901:5901 -p 9100:9101 \
+    jaikumarm/iqfeed:v6002
 ```
 
 In docker logs of the container and you should see

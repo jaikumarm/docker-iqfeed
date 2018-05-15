@@ -48,9 +48,15 @@ RUN	dpkg --add-architecture i386 && \
 	chmod +x winetricks && \
 	mv winetricks /usr/local/bin && \
 # Installation of winbind to stop ntlm error messages.
-	apt-get install -y --no-install-recommends winbind
+	apt-get install -y --no-install-recommends winbind && \
 # Installation of p11 to stop p11 kit error messages.
 	#apt-get install -y --no-install-recommends p11-kit-modules:i386 libp11-kit-gnome-keyring:i386 && \
+# Cleaning up.
+	apt-get autoremove -y --purge && \
+	apt-get clean -y && \
+	rm -rf /home/wine/.cache && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 RUN \
 # Installation of winetricks' tricks as wine user, comment if not needed.
 	su -p -l wine -c 'winecfg && wineserver --wait' && \
@@ -61,6 +67,7 @@ RUN \
 	curl -SL http://www.iqfeed.net/$IQFEED_INSTALLER_BIN -o /home/wine/.wine/drive_c/$IQFEED_INSTALLER_BIN && \
 	su -p -l wine -c '/usr/bin/xvfb-run -s -noreset -a /usr/bin/wine /home/wine/.wine/drive_c/$IQFEED_INSTALLER_BIN /S && wineserver --wait' && \
 # Install python for pyiqfeed
+	apt-get update && \
 	apt-get install -y --no-install-recommends python3 python3-setuptools python3-numpy && \
 	apt-get install -y --no-install-recommends python3-pip python3-tz python3-psycopg2 python3-dateutil python3-sqlalchemy python3-pandas &&\
 # Cleaning up.
@@ -74,6 +81,7 @@ RUN git clone https://github.com/jaikumarm/pyiqfeed.git && \
     cd pyiqfeed && \
     python3 setup.py install && \
     cd .. && rm -rf pyiqfeed
+	
 ADD launch_iqfeed.py /home/wine/launch_iqfeed.py
 ADD pyiqfeed_admin_conn.py /home/wine/pyiqfeed_admin_conn.py
 ADD is_iqfeed_running.py /home/wine/is_iqfeed_running.py
