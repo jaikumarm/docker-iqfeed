@@ -132,12 +132,12 @@ if __name__ == "__main__":
             admin_conn = iq.AdminConn(name="Launcher")
             admin_listener = CustomVerboseIQFeedAdminListener("Launcher-Admin-listen")
             admin_conn.add_listener(admin_listener)
+            logging.info("iqfeed service running.")
             with iq.ConnConnector([admin_conn]) as connected:
                 if not iq.service._is_iqfeed_running():
                     logging.info("iqfeed service stopped, exiting..")
                     break
                 #admin_conn.client_stats_off()
-                logging.info("iqfeed service running.")
                 time.sleep(300)
         else:
             logging.info("iqfeed service not running.")
