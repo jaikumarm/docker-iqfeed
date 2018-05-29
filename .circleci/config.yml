@@ -11,11 +11,11 @@ jobs:
       - checkout
       # build
       - run: |
-          docker build -t jaikumarm/iqfeed:v6002 -f Dockerfile . | cat # workaround progress bar weirdness
+          docker build -t jaikumarm/iqfeed:v6003 -f Dockerfile . | cat # workaround progress bar weirdness
       # deploy
       - run: |
           set -x
           sh +x -c 'echo $DOCKER_PASS' | docker login -u=$DOCKER_USER --password-stdin
-          docker push jaikumarm/iqfeed:v6002
-          docker tag jaikumarm/iqfeed:v6002 jaikumarm/iqfeed:latest
+          docker push jaikumarm/iqfeed:v6003
+          docker tag jaikumarm/iqfeed:v6003 jaikumarm/iqfeed:latest
           docker push jaikumarm/iqfeed:latest
