@@ -11,7 +11,7 @@ jobs:
       - checkout
       # build
       - run: |
-          docker build -t jaikumarm/iqfeed:v6003 -f Dockerfile . | cat # workaround progress bar weirdness
+          docker build -t jaikumarm/iqfeed:v6004 -f Dockerfile . | cat # workaround progress bar weirdness
       # deploy
       - run: |
           set -x
