@@ -16,6 +16,6 @@ jobs:
       - run: |
           set -x
           sh +x -c 'echo $DOCKER_PASS' | docker login -u=$DOCKER_USER --password-stdin
-          docker push jaikumarm/iqfeed:v6003
-          docker tag jaikumarm/iqfeed:v6003 jaikumarm/iqfeed:latest
+          docker push jaikumarm/iqfeed:v6004
+          docker tag jaikumarm/iqfeed:v6004 jaikumarm/iqfeed:latest
           docker push jaikumarm/iqfeed:latest
