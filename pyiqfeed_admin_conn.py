@@ -47,6 +47,7 @@ import pyiqfeed as iq
 log_filename = "/home/wine/DTN/IQFeed/pyiqfeed-admin-conn.log"
 
 logging.basicConfig(filename=log_filename,
+                    filemode='w',
                     level=logging.DEBUG,
                     format='%(asctime)s %(message)s')
 # define a Handler which writes INFO messages or higher to the sys.stderr
