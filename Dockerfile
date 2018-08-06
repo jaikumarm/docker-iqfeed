@@ -5,8 +5,7 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV DISPLAY :1
-#ENV IQFEED_INSTALLER_BIN="iqfeed_client_5_2_7_0.exe"
-ENV IQFEED_INSTALLER_BIN="iqfeed_client_6_0_0_4.exe"
+ENV IQFEED_INSTALLER_BIN="iqfeed_client_6_0_0_5.exe"
 
 # Creating the wine user and setting up dedicated non-root environment: replace 1001 by your user id (id -u) for X sharing.
 RUN useradd -u 1000 -d /home/wine -m -s /bin/bash wine
