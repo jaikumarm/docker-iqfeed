@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 # Set correct environment variables
 ENV LC_ALL C.UTF-8
@@ -34,7 +34,7 @@ RUN	dpkg --add-architecture i386 && \
 # Adding required ppas: for installing wine.
 	apt-get purge wine.* && \
 	wget -nc https://dl.winehq.org/wine-builds/Release.key && apt-key add Release.key && \
-	add-apt-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ xenial main' && \
+	add-apt-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main' && \
 	#add-apt-repository ppa:ricotz/unstable &&\
 	#add-apt-repository -y ppa:ubuntu-wine/ppa && \
 	apt-get update && \
