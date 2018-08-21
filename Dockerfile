@@ -49,8 +49,8 @@ RUN \
 	mkdir -p /usr/share/wine/gecko && \
 	wget -nv http://dl.winehq.org/wine/wine-mono/4.7.3/wine-mono-4.7.3.msi -O /usr/share/wine/mono/wine-mono-4.7.3.msi && \
 	wget -nv http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86.msi -O /usr/share/wine/gecko/wine_gecko-2.47-x86.msi && \
-	su -p -l wine -c 'msiexec /i wine_gecko-2.47-x86.msi /q /l* wine_gecko-2.47-x86.log' && \
-	su -p -l wine -c 'msiexec /i wine-mono-4.7.3.msi /q /l* wine-mono-4.7.3.log' && \
+	#su -p -l wine -c 'msiexec /i wine_gecko-2.47-x86.msi /q /l* wine_gecko-2.47-x86.log' && \
+	#su -p -l wine -c 'msiexec /i wine-mono-4.7.3.msi /q /l* wine-mono-4.7.3.log' && \
 	apt-get install -y --no-install-recommends cabextract p7zip zenity && \
 	wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && \
 	chmod +x winetricks && \
