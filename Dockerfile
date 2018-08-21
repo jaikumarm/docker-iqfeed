@@ -39,9 +39,18 @@ RUN	dpkg --add-architecture i386 && \
 	#add-apt-repository -y ppa:ubuntu-wine/ppa && \
 	apt-get update && \
 # Installation of wine, winetricks and its utilities and temporary xvfb to install latest winetricks and its tricks during docker build.
-	apt-get install -y --no-install-recommends winehq-stable && \
+	apt-get install -y --no-install-recommends winehq-stable
 	#apt-get install -y --install-recommends wine1.8 && \	
-	apt-get install -y --no-install-recommends wine-mono wine-gecko && \
+	#apt-get install -y --no-install-recommends wine-mono wine-gecko && \
+	# Install gecko and mono via wget and msiexec
+
+RUN \
+	mkdir -p /usr/share/wine/mono && \	
+	mkdir -p /usr/share/wine/gecko && \
+	wget -nv http://dl.winehq.org/wine/wine-mono/4.7.3/wine-mono-4.7.3.msi -O /usr/share/wine/mono/wine-mono-4.7.3.msi && \
+	wget -nv http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86.msi -O /usr/share/wine/gecko/wine_gecko-2.47-x86.msi && \
+	su -p -l wine -c 'msiexec /i wine_gecko-2.47-x86.msi /q /l* wine_gecko-2.47-x86.log' && \
+	su -p -l wine -c 'msiexec /i wine-mono-4.7.3.msi /q /l* wine-mono-4.7.3.log' && \
 	apt-get install -y --no-install-recommends cabextract p7zip zenity && \
 	wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && \
 	chmod +x winetricks && \
@@ -53,7 +62,6 @@ RUN	dpkg --add-architecture i386 && \
 # Cleaning up.
 	apt-get autoremove -y --purge && \
 	apt-get clean -y && \
-	rm -rf /home/wine/.cache && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN \
@@ -62,8 +70,8 @@ RUN \
 	#su -p -l wine -c 'winetricks -q winxp && wineserver --wait' && \
 	#su -p -l wine -c 'winetricks -q corefonts && wineserver --wait' && \
 	su -p -l wine -c 'winetricks -q nocrashdialog && wineserver --wait' && \
-# Download Install iqfeed client
-	curl -SL http://www.iqfeed.net/$IQFEED_INSTALLER_BIN -o /home/wine/.wine/drive_c/$IQFEED_INSTALLER_BIN && \
+	# Download Install iqfeed client
+	wget -nv http://www.iqfeed.net/$IQFEED_INSTALLER_BIN -O /home/wine/.wine/drive_c/$IQFEED_INSTALLER_BIN && \
 	su -p -l wine -c '/usr/bin/xvfb-run -s -noreset -a /usr/bin/wine /home/wine/.wine/drive_c/$IQFEED_INSTALLER_BIN /S && wineserver --wait' && \
 # Install python for pyiqfeed
 	apt-get update && \
