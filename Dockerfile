@@ -28,7 +28,7 @@ RUN	dpkg --add-architecture i386 && \
 	apt-get update && \
 	apt-get upgrade -y && \
 # We need software-properties-common to add ppas and wget and apt-transport-https to add repositories and their keys.
-	apt-get install -y --no-install-recommends software-properties-common apt-transport-https wget unzip curl sudo vim git && \
+	apt-get install -y --no-install-recommends software-properties-common apt-transport-https wget unzip curl sudo vim git gpg-agent && \
 # Adding x11vnc, supervisor and nodejs
 	apt-get install -y --no-install-recommends xvfb x11vnc xdotool supervisor fluxbox xterm net-tools nodejs && \
 # Adding required ppas: for installing wine.
