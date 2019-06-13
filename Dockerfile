@@ -5,7 +5,7 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV DISPLAY :1
-ENV IQFEED_INSTALLER_BIN="iqfeed_client_6_0_0_5.exe"
+ENV IQFEED_INSTALLER_BIN="iqfeed_client_6_0_1_1.exe"
 
 # Creating the wine user and setting up dedicated non-root environment: replace 1001 by your user id (id -u) for X sharing.
 RUN useradd -u 1000 -d /home/wine -m -s /bin/bash wine
@@ -33,7 +33,7 @@ RUN	dpkg --add-architecture i386 && \
 	apt-get install -y --no-install-recommends xvfb x11vnc xdotool supervisor fluxbox xterm net-tools nodejs && \
 # Adding required ppas: for installing wine.
 	apt-get purge wine.* && \
-	wget -nc https://dl.winehq.org/wine-builds/Release.key && apt-key add Release.key && \
+	wget -nc https://dl.winehq.org/wine-builds/winehq.key && apt-key add winehq.key	&& \
 	add-apt-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main' && \
 	#add-apt-repository ppa:ricotz/unstable &&\
 	#add-apt-repository -y ppa:ubuntu-wine/ppa && \
