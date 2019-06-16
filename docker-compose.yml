@@ -2,6 +2,7 @@ version: '3.4'
 services:
   iqfeed:
     image: jaikumarm/iqfeed:v6011
+    container_name: iqfeed
     ports:
      - "5009:5010"
      - "5901:5901"     
@@ -22,9 +23,10 @@ services:
 
   autoheal:
     image: willfarrell/autoheal:latest
+    container_name: autoheal
     restart: always
     environment:
-      AUTOHEAL_CONTAINER_LABEL: iqfeed
+      AUTOHEAL_CONTAINER_LABEL: all
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     hostname: autoheal      
