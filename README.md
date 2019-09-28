@@ -15,7 +15,7 @@ docker run -e IQFEED_PRODUCT_ID=CHANGEME \
     -e IQFEED_PASSWORD=CHANGEME \
     -p 5009:5010 -p 5901:5901 -p 9100:9101 -p 9300:9301 \
     -v /var/log/iqfeed:/home/wine/DTN/IQFeed \
-    -d jaikumarm/iqfeed:v6011
+    -d jaikumarm/iqfeed:v61020
 ```
 
 With `docker-compose` edit the docker-compose.yml with your iqfeed credentials, then run
