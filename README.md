@@ -13,8 +13,8 @@ With `docker run`
 docker run -e IQFEED_PRODUCT_ID=CHANGEME \
     -e IQFEED_LOGIN=CHANGEME \
     -e IQFEED_PASSWORD=CHANGEME \
-    -p 5009:5010 -p 5901:5901 -p 9100:9101 -p 9200:9201 -p 9300:9301 -p 9400:9401\
-    -v /var/log/iqfeed:/home/wine/DTN/IQFeed \
+    -p 5009:5010 -p 9100:9101 -p 9200:9201 -p 9300:9301 -p 9400:9401\
+    -v /var/log/iqfeed:/root/DTN/IQFeed \
     -d jaikumarm/iqfeed:v61020-w5
 ```
 
@@ -27,16 +27,16 @@ docker-compose -f docker-compose.yml up -d iqfeed
 In docker logs of the container and you should see
 ```
 ...
-2020-03-03 03:43:30,533 INFO pyiqfeed_admin_conn.<module>.144:  iqfeed service not running.
-2020-03-03 03:43:31,729 INFO reaped unknown pid 46
-2020-03-03 03:43:32,721 INFO reaped unknown pid 53
-2020-03-03 03:43:32,722 INFO reaped unknown pid 100
-Failed to read: session.screen0.titlebar.left
-Setting default value
-Failed to read: session.screen0.titlebar.right
-Setting default value
-2020-03-03 03:43:34,855 INFO reaped unknown pid 98
-2020-03-03 03:43:48,235 INFO pyiqfeed_admin_conn.<module>.136:  iqfeed service running.
+2020-03-03 05:52:11,281 INFO supervisord started with pid 1
+...
+2020-03-03 05:52:12,521 INFO pyiqfeed_admin_conn.<module>.64:  PyIQFeed admin conn started.
+2020-03-03 05:52:12,524 INFO pyiqfeed_admin_conn.<module>.144:  iqfeed service not running.
+2020-03-03 05:52:13,822 INFO success: iqfeed-proxy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-03-03 05:52:13,822 INFO success: Xvfb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-03-03 05:52:13,822 INFO success: wine-iqfeed-startup entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-03-03 05:52:13,822 INFO success: pyiqfeed-admin-conn entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+..
+2020-03-03 05:52:30,221 INFO pyiqfeed_admin_conn.<module>.136:  iqfeed service running.
 ...
 ```
 

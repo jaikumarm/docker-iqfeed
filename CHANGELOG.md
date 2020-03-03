@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 2020-03-02
 ### Changed
-- updating wine to 5.0 hopeing to resolve the frequent crashes seen on earlier versions
+- updating wine to 5.0 hoping to resolve the frequent crashes seen on earlier versions
 - updating base ubuntu image to eoan (19.10) as wine 5.0 depends on libfaudio0 which is not available on 18.04
 - updating dockerhub image: jaikumarm/iqfeed:v61020-w5
 
