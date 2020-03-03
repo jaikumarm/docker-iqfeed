@@ -67,6 +67,9 @@ dockerspawner.tar.gz
 *.orig
 .ipynb_checkpoints/
 
+# Visual Studio Code
+.vscode
+
 # Secrets
 secrets.py
 passwords.py
