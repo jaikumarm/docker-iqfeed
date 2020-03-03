@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 2020-03-02
+### Changed
+- updating wine to 5.0 hopeing to resolve the frequent crashes seen on earlier versions
+- updating base ubuntu image to eoan (19.10) as wine 5.0 depends on libfaudio0 which is not available on 18.04
+- updating dockerhub image: jaikumarm/iqfeed:v61020-w5
+
 ## 2019-09-27
 ### Changed
 - updating IQFeed Client version to 6.1.0.20 (dockerhub image: jaikumarm/iqfeed:v61020)
