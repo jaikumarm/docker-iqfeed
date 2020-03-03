@@ -5,11 +5,12 @@ services:
     container_name: iqfeed
     ports:
      - "5009:5010"
-     - "5901:5901"     
      - "9100:9101"
      - "9200:9201"
      - "9300:9301"
-     - "8088:8080"
+     - "9400:9401"
+    # - "5901:5901"     
+    # - "8088:8080"
     environment:
       IQFEED_PRODUCT_ID: "CHANGEME"
       IQFEED_LOGIN: "CHANGEME"
