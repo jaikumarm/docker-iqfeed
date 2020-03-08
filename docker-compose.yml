@@ -4,13 +4,13 @@ services:
     image: jaikumarm/iqfeed:v61020-w5
     container_name: iqfeed
     ports:
-     - "5009:5010"
-     - "9100:9101"
-     - "9200:9201"
-     - "9300:9301"
-     - "9400:9401"
-    # - "5901:5901"     
-    # - "8088:8080"
+     - "5009:5009"
+     - "9100:9100"
+     - "9200:9200"
+     - "9300:9300"
+     - "9400:9400"
+     - "8088:8080"
+     - "5901:5900"
     environment:
       IQFEED_PRODUCT_ID: "CHANGEME"
       IQFEED_LOGIN: "CHANGEME"

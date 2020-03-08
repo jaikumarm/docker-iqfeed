@@ -7,13 +7,31 @@ See [CHANGELOG](./CHANGELOG.md) for a list of notable changes
 
 Usage
 -----
+Clone this repository and build the image:
+```
+git clone https://github.com/jaikumarm/iqfeed-docker.git
+cd iqfeed-docker
+docker build . -t iqfeed-docker
+```
 
-With `docker run`
+Run your image with `docker run`
+```
+docker run -e IQFEED_PRODUCT_ID=CHANGEME \
+    -e IQFEED_LOGIN=CHANGEME \
+    -e IQFEED_PASSWORD=CHANGEME \
+    -p 5009 -p 9100 -p 9200 -p 9300 -p 9400 \
+    -p 5901:5901 -p 8088:8080 \
+    -v /var/log/iqfeed:/root/DTN/IQFeed \
+    -d iqfeed-docker
+```
+
+OR you can directly run my image from dockerhub with  `docker run`
 ```
 docker run -e IQFEED_PRODUCT_ID=CHANGEME \
     -e IQFEED_LOGIN=CHANGEME \
     -e IQFEED_PASSWORD=CHANGEME \
     -p 5009:5010 -p 9100:9101 -p 9200:9201 -p 9300:9301 -p 9400:9401\
+    -p 5901:5901 -p 8088:8080 \
     -v /var/log/iqfeed:/root/DTN/IQFeed \
     -d jaikumarm/iqfeed:v61020-w5
 ```
@@ -42,7 +60,7 @@ In docker logs of the container and you should see
 
 If you see `iqfeed service running.` it means it all good. 
 
-You can also see a very chatty version of whats going on with iqfeed client if you tail `/var/log/iqfeed/IQConnectLog.txt` or `/var/log/iqfeed/pyiqfeed-admin-conn.log`. 
+You can also see a very chatty version of whats going on with iqfeed client if you tail `tail -f /var/log/iqfeed/pyiqfeed-admin-conn.log`. 
 
 
 SideNote:
@@ -55,6 +73,8 @@ docker-compose -f docker-compose.yml up -d autoheal
 
 This is fairly a opinionated configuration based on my own needs, if you dont like it fork it!
 
-Also some of the code is borrowed and/or inspired from
-https://github.com/bratchenko/docker-iqfeed and https://github.com/webanck/docker-wine-steam
+Also some of the code is borrowed and/or inspired from in no particular order
+* https://github.com/bratchenko/docker-iqfeed
+* https://github.com/webanck/docker-wine-steam
+* https://github.com/denniskupec/iqfeed-docker
 
