@@ -23,7 +23,7 @@ RUN dpkg --add-architecture i386 && \
         software-properties-common apt-utils supervisor xvfb wget tar gpg-agent bbe netcat-openbsd net-tools && \
     wget -O - https://dl.winehq.org/wine-builds/winehq.key | apt-key add - && \
     echo 'deb https://dl.winehq.org/wine-builds/ubuntu/ eoan main' |tee /etc/apt/sources.list.d/winehq.list && \
-    apt-get update && apt-get install -yq --no-install-recommends winehq-stable winbind winetricks && \
+    apt-get update && apt-get install -yq --no-install-recommends winehq-stable winbind winetricks cabextract && \
     mkdir /opt/wine-stable/share/wine/mono && \
     wget -O - https://dl.winehq.org/wine/wine-mono/4.9.4/wine-mono-bin-4.9.4.tar.gz |tar -xzv -C /opt/wine-stable/share/wine/mono && \
     mkdir /opt/wine-stable/share/wine/gecko && \
@@ -43,7 +43,7 @@ RUN dpkg --add-architecture i386 && \
 
 RUN \
     winecfg && wineserver --wait && \
-    winetricks -q nocrashdialog && wineserver --wait && \
+    #xvfb-run -s -noreset -a winetricks -q nocrashdialog vcrun2012 corefonts winxp && wineserver --wait && \
     # Download Install iqfeed client
     wget -nv http://www.iqfeed.net/$IQFEED_INSTALLER_BIN -O /root/$IQFEED_INSTALLER_BIN && \
     xvfb-run -s -noreset -a wine /root/$IQFEED_INSTALLER_BIN /S && wineserver --wait && \
