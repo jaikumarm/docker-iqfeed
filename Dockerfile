@@ -17,6 +17,8 @@ ENV IQFEED_LOG_LEVEL 0xB222
 
 ENV WINEDEBUG -all
 
+ADD sources.list /etc/apt/sources.list
+
 RUN dpkg --add-architecture i386 && \
     apt-get update && apt-get upgrade -yq && \
     apt-get install -yq --no-install-recommends \
