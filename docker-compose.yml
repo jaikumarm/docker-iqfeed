@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   iqfeed:
-    image: jaikumarm/iqfeed:v61020-w5
+    image: jaikumarm/iqfeed:v61020-w6
     container_name: iqfeed
     ports:
      - "5009:5009"

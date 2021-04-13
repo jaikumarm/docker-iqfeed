@@ -1,8 +1,0 @@
-## EOL upgrade sources.list
-# Required
-deb http://old-releases.ubuntu.com/ubuntu/ eoan main restricted universe multiverse
-deb http://old-releases.ubuntu.com/ubuntu/ eoan-updates main restricted universe multiverse
-deb http://old-releases.ubuntu.com/ubuntu/ eoan-security main restricted universe multiverse
-
-# Optional
-deb http://old-releases.ubuntu.com/ubuntu/ eoan-backports main restricted universe multiverse

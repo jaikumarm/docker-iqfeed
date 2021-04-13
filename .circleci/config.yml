@@ -1,21 +1,25 @@
-version: 2
+version: 2.1
 jobs:
-  build:
+  build-and-push:
     machine: true
-    
-    branches:
-      ignore:
-        - dev
-
     steps:
       - checkout
-      # build
+      #build
       - run: |
-          docker build -t jaikumarm/iqfeed:v61020-w5 -f Dockerfile . | cat # workaround progress bar weirdness
-      # deploy
+          docker build -t jaikumarm/iqfeed:v61020-w6 -f Dockerfile . | cat # workaround progress bar weirdness
+      #push
       - run: |
           set -x
           sh +x -c 'echo $DOCKER_PASS' | docker login -u=$DOCKER_USER --password-stdin
-          docker push jaikumarm/iqfeed:v61020-w5
-          docker tag jaikumarm/iqfeed:v61020-w5 jaikumarm/iqfeed:latest
+          docker push jaikumarm/iqfeed:v61020-w6
+          docker tag jaikumarm/iqfeed:v61020-w6 jaikumarm/iqfeed:latest
           docker push jaikumarm/iqfeed:latest
+
+workflows:
+  version: 2
+  build-and-push-image:
+    jobs:
+      - build-and-push:
+          filters:
+            branches:
+              only: master

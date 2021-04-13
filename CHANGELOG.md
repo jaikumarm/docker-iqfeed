@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 2021-04-12
+### Changed
+- updating wine to 6.0 and ubuntu 20.04 (focal) as 19.10 (eoan) is out of support
+- updating dockerhub image: jaikumarm/iqfeed:v61020-w6
+
 ## 2020-03-02
 ### Changed
 - updating wine to 5.0 hoping to resolve the frequent crashes seen on earlier versions
