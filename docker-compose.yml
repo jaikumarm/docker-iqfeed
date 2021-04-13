@@ -20,10 +20,10 @@ services:
       - /var/log/distdnnd:/var/log/distdnnd
     healthcheck:
       test: ["CMD", "python3", "/root/is_iqfeed_running.py"]
-      interval: 30s
-      timeout: 15s
+      interval: 60s
+      timeout: 30s
       retries: 3
-      start_period: 1m
+      start_period: 5m
 
   autoheal:
     image: willfarrell/autoheal:latest
