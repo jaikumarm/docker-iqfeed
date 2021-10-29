@@ -1,7 +1,7 @@
 #!/bin/bash
 export WINEDEBUG=+tid,+seh,+loaddll
 
-iqconnect_exe="/root/prefix32/drive_c/Program Files/DTN/IQFeed/iqconnect.exe"
+iqconnect_exe="/root/.wine/drive_c/Program Files/DTN/IQFeed/iqconnect.exe"
 if [ -f "$iqconnect_exe" ]
 then
 	echo "$iqconnect_exe found. launching iqfeed client"

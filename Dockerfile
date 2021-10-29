@@ -8,8 +8,8 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
-ENV WINEPREFIX /root/prefix32
-ENV WINEARCH win32
+ENV WINEPREFIX /root/.wine
+#ENV WINEARCH win32
 ENV DISPLAY :0
 
 ENV IQFEED_INSTALLER_BIN="iqfeed_client_6_2_0_23.exe"
@@ -24,17 +24,18 @@ RUN dpkg --add-architecture i386 && \
     # Adding x11vnc and fluxbox
 	#apt-get install -y --no-install-recommends x11vnc xdotool fluxbox xterm && \
     wget -O - https://dl.winehq.org/wine-builds/winehq.key | apt-key add - && \
-    echo 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' |tee /etc/apt/sources.list.d/winehq.list && \
-    apt-get update && apt-get install -yq --no-install-recommends winehq-stable winbind winetricks cabextract && \
-    mkdir /opt/wine-stable/share/wine/mono && \
-    wget -O - https://dl.winehq.org/wine/wine-mono/4.9.4/wine-mono-bin-4.9.4.tar.gz |tar -xzv -C /opt/wine-stable/share/wine/mono && \
-    mkdir /opt/wine-stable/share/wine/gecko && \
-    wget -O /opt/wine-stable/share/wine/gecko/wine-gecko-2.47.1-x86.msi https://dl.winehq.org/wine/wine-gecko/2.47.1/wine-gecko-2.47.1-x86.msi && \
-    wget -O /opt/wine-stable/share/wine/gecko/wine-gecko-2.47.1-x86_64.msi https://dl.winehq.org/wine/wine-gecko/2.47.1/wine-gecko-2.47.1-x86_64.msi && \
+    add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' && \
+    apt-get update && apt-get install -yq --install-recommends winehq-stable && \
+    apt-get install -yq --no-install-recommends winbind winetricks cabextract && \
+    #mkdir /opt/wine-stable/share/wine/mono && \
+    #wget -O - https://dl.winehq.org/wine/wine-mono/6.0.0/wine-mono-6.0.0-x86.tar.xz |tar -xzv -C /opt/wine-stable/share/wine/mono && \
+    #mkdir /opt/wine-stable/share/wine/gecko && \
+    #wget -O /opt/wine-stable/share/wine/gecko/wine-gecko-2.47.2-x86.msi https://dl.winehq.org/wine/wine-gecko/2.47.2/wine-gecko-2.47.2-x86.msi && \
+    #wget -O /opt/wine-stable/share/wine/gecko/wine-gecko-2.47.2-x86_64.msi https://dl.winehq.org/wine/wine-gecko/2.47.2/wine-gecko-2.47.2-x86_64.msi && \
     # Install python for pyiqfeed
     apt-get install -yq --no-install-recommends \
         git python3 python3-setuptools python3-numpy python3-pip python3-tz \
-        python3-psycopg2 python3-dateutil python3-sqlalchemy python3-pandas &&\
+        python3-psycopg2 python3-dateutil python3-sqlalchemy python3-pandas && \
     # Cleaning up.
     apt-get autoremove -y --purge && \
     apt-get clean -y && \
@@ -56,9 +57,8 @@ RUN \
     python3 setup.py install && \
     cd .. && rm -rf pyiqfeed && \
     # 'hack' to allow the client to listen on other interfaces
-    bbe -e 's/127.0.0.1/000.0.0.0/g' "/root/prefix32/drive_c/Program Files/DTN/IQFeed/iqconnect.exe" > "/root/prefix32/drive_c/Program Files/DTN/IQFeed/iqconnect_patched.exe" &&\
-    rm -rf /root/prefix32/.cache /var/lib/apt/lists/* $HOME/prefix32/drive_c/iqfeed_install.exe
-
+    bbe -e 's/127.0.0.1/000.0.0.0/g' "/root/.wine/drive_c/Program Files/DTN/IQFeed/iqconnect.exe" > "/root/.wine/drive_c/Program Files/DTN/IQFeed/iqconnect_patched.exe" && \
+    rm -rf /root/.wine/.cache $HOME/.wine/drive_c/iqfeed_install.exe
 
 ADD launch_iqfeed.py /root/launch_iqfeed.py
 ADD pyiqfeed_admin_conn.py /root/pyiqfeed_admin_conn.py
