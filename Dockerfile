@@ -9,10 +9,9 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
 ENV WINEPREFIX /root/.wine
-#ENV WINEARCH win32
 ENV DISPLAY :0
 
-ENV IQFEED_INSTALLER_BIN="iqfeed_client_6_2_0_23.exe"
+ENV IQFEED_INSTALLER_BIN="iqfeed_client_6_2_0_25.exe"
 ENV IQFEED_LOG_LEVEL 0xB222
 
 ENV WINEDEBUG -all
@@ -21,17 +20,13 @@ RUN dpkg --add-architecture i386 && \
     apt-get update && apt-get upgrade -yq && \
     apt-get install -yq --no-install-recommends \
         software-properties-common apt-utils supervisor xvfb wget tar gpg-agent bbe netcat-openbsd net-tools && \
-    # Adding x11vnc and fluxbox
+    # Install x11vnc and fluxbox
 	#apt-get install -y --no-install-recommends x11vnc xdotool fluxbox xterm && \
+    # Install winehq-stable    
     wget -O - https://dl.winehq.org/wine-builds/winehq.key | apt-key add - && \
     add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' && \
     apt-get update && apt-get install -yq --install-recommends winehq-stable && \
     apt-get install -yq --no-install-recommends winbind winetricks cabextract && \
-    #mkdir /opt/wine-stable/share/wine/mono && \
-    #wget -O - https://dl.winehq.org/wine/wine-mono/6.0.0/wine-mono-6.0.0-x86.tar.xz |tar -xzv -C /opt/wine-stable/share/wine/mono && \
-    #mkdir /opt/wine-stable/share/wine/gecko && \
-    #wget -O /opt/wine-stable/share/wine/gecko/wine-gecko-2.47.2-x86.msi https://dl.winehq.org/wine/wine-gecko/2.47.2/wine-gecko-2.47.2-x86.msi && \
-    #wget -O /opt/wine-stable/share/wine/gecko/wine-gecko-2.47.2-x86_64.msi https://dl.winehq.org/wine/wine-gecko/2.47.2/wine-gecko-2.47.2-x86_64.msi && \
     # Install python for pyiqfeed
     apt-get install -yq --no-install-recommends \
         git python3 python3-setuptools python3-numpy python3-pip python3-tz \
