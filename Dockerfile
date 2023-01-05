@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
 WORKDIR /root/
 ENV HOME /root
@@ -20,12 +20,10 @@ RUN dpkg --add-architecture i386 && \
     apt-get update && apt-get upgrade -yq && \
     apt-get install -yq --no-install-recommends \
         software-properties-common apt-utils supervisor xvfb wget tar gpg-agent bbe netcat-openbsd net-tools && \
-    # Install x11vnc and fluxbox
-	#apt-get install -y --no-install-recommends x11vnc xdotool fluxbox xterm && \
     # Install winehq-stable    
     wget -O - https://dl.winehq.org/wine-builds/winehq.key | apt-key add - && \
-    add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' && \
-    apt-get update && apt-get install -yq --install-recommends winehq-stable && \
+    add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main' && \
+    apt-get update && apt-get install -yq --install-recommends winehq-devel && \
     apt-get install -yq --no-install-recommends winbind winetricks cabextract && \
     # Install python for pyiqfeed
     apt-get install -yq --no-install-recommends \
@@ -36,12 +34,8 @@ RUN dpkg --add-architecture i386 && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-#RUN wget -O - https://github.com/novnc/noVNC/archive/v1.1.0.tar.gz | tar -xzv -C /root/ && mv /root/noVNC-1.1.0 /root/novnc && ln -s /root/novnc/vnc_lite.html /root/novnc/index.html
-#RUN wget -O - https://github.com/novnc/websockify/archive/v0.9.0.tar.gz | tar -xzv -C /root/ && mv /root/websockify-0.9.0 /root/novnc/utils/websockify
-
 RUN \
     winecfg && wineserver --wait && \
-    #xvfb-run -s -noreset -a winetricks -q nocrashdialog vcrun2012 corefonts winxp && wineserver --wait && \
     # Download Install iqfeed client
     wget -nv http://www.iqfeed.net/$IQFEED_INSTALLER_BIN -O /root/$IQFEED_INSTALLER_BIN && \
     xvfb-run -s -noreset -a wine /root/$IQFEED_INSTALLER_BIN /S && wineserver --wait && \
