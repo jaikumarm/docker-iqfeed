@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 2023-01-05
+### Changed
+- updating ubuntu to 22.04 from 20.04 and wine6 from stable to devel
+- no change in IQFeed Client version still 6.2.0.25 (dockerhub image: jaikumarm/iqfeed:v62025-w6d)
+
 ## 2021-11-12
 ### Changed
 - updating IQFeed Client version to 6.2.0.25 (dockerhub image: jaikumarm/iqfeed:v62025-w6)
