@@ -23,7 +23,7 @@ RUN dpkg --add-architecture i386 && \
     # Install winehq-stable    
     wget -O - https://dl.winehq.org/wine-builds/winehq.key | apt-key add - && \
     add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main' && \
-    apt-get update && apt-get install -yq --install-recommends winehq-devel && \
+    apt-get update && apt-get install -yq --install-recommends winehq-stable && \
     apt-get install -yq --no-install-recommends winbind winetricks cabextract && \
     # Install python for pyiqfeed
     apt-get install -yq --no-install-recommends \

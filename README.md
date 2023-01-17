@@ -33,7 +33,7 @@ docker run -e IQFEED_PRODUCT_ID=CHANGEME \
     -p 5009:5010 -p 9101:9100 -p 9201:9200 -p 9301:9300 -p 9401:9400\
     -p 5901:5901 -p 8088:8088 \
     -v /var/log/iqfeed:/root/DTN/IQFeed \
-    -d jaikumarm/iqfeed:v62025-w6d
+    -d jaikumarm/iqfeed:v62025-w7
 ```
 
 With `docker-compose` edit the docker-compose.yml with your iqfeed credentials, then run
