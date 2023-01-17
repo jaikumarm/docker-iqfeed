@@ -76,7 +76,7 @@ class CustomFeedService(iq.FeedService):
                 ShellExecute(0, "open", "IQConnect.exe", iqfeed_args, "",
                              SW_SHOWNORMAL)
             elif sys.platform == 'darwin' or sys.platform == 'linux':
-                base_iqfeed_call = "wine iqconnect.exe %s 2>&1 > /root/DTN/IQFeed/wine.log " % iqfeed_args
+                base_iqfeed_call = "wine64 iqconnect.exe %s 2>&1 > /root/DTN/IQFeed/wine.log " % iqfeed_args
                 prefix_str = ""
                 if nohup:
                     prefix_str += "nohup "

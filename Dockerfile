@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:22.04
 
 WORKDIR /root/
 ENV HOME /root
@@ -16,15 +16,23 @@ ENV IQFEED_LOG_LEVEL 0xB222
 
 ENV WINEDEBUG -all
 
-RUN dpkg --add-architecture i386 && \
+RUN \
+    dpkg --add-architecture i386 && \
     apt-get update && apt-get upgrade -yq && \
     apt-get install -yq --no-install-recommends \
         software-properties-common apt-utils supervisor xvfb wget tar gpg-agent bbe netcat-openbsd net-tools && \
+    apt-get autoremove -y --purge && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN \
     # Install winehq-stable    
     wget -O - https://dl.winehq.org/wine-builds/winehq.key | apt-key add - && \
     add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main' && \
-    apt-get update && apt-get install -yq --install-recommends winehq-stable && \
+    apt-get update && apt-get install -yq --no-install-recommends winehq-devel && \
     apt-get install -yq --no-install-recommends winbind winetricks cabextract && \
+    wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && \
+	chmod +x winetricks && mv winetricks /usr/local/bin && \
     # Install python for pyiqfeed
     apt-get install -yq --no-install-recommends \
         git python3 python3-setuptools python3-numpy python3-pip python3-tz \
@@ -38,8 +46,8 @@ RUN \
     winecfg && wineserver --wait && \
     # Download Install iqfeed client
     wget -nv http://www.iqfeed.net/$IQFEED_INSTALLER_BIN -O /root/$IQFEED_INSTALLER_BIN && \
-    xvfb-run -s -noreset -a wine /root/$IQFEED_INSTALLER_BIN /S && wineserver --wait && \
-    wine reg add HKEY_CURRENT_USER\\\Software\\\DTN\\\IQFeed\\\Startup /t REG_DWORD /v LogLevel /d $IQFEED_LOG_LEVEL /f && wineserver --wait && \
+    xvfb-run -s -noreset -a wine64 /root/$IQFEED_INSTALLER_BIN /S && wineserver --wait && \
+    wine64 reg add HKEY_CURRENT_USER\\\Software\\\DTN\\\IQFeed\\\Startup /t REG_DWORD /v LogLevel /d $IQFEED_LOG_LEVEL /f && wineserver --wait && \
     # Add pyiqfeed 
     git clone https://github.com/jaikumarm/pyiqfeed.git && \
     cd pyiqfeed && \

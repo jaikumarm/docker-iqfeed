@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 2023-01-17
 ### Changed
+- updating wine from 7 to 8
+- reverting wine to devel from stable due to dbus crash during image build or deploy
+- no change in IQFeed Client version still 6.2.0.25 (dockerhub image: jaikumarm/iqfeed:v62025-w8d)
+
+## 2023-01-17
+### Changed
 - updating wine from 6 to 7
 - updating wine from devel to stable due to instability in the pat 2 weeks since moving to devel
-- no change in IQFeed Client version still 6.2.0.25 (dockerhub image: jaikumarm/iqfeed:v62025-w7)
+- no change in IQFeed Client version still 6.2.0.25 (dockerhub image: jaikumarm/iqfeed:v62025-w8d)
 
 ## 2023-01-05
 ### Changed
