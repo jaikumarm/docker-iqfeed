@@ -12,7 +12,7 @@ jobs:
           set -x
           sh +x -c 'echo $DOCKER_PASS' | docker login -u=$DOCKER_USER --password-stdin
           docker push jaikumarm/iqfeed:v62025-w8
-          docker tag jaikumarm/iqfeed:v62025-w jaikumarm/iqfeed:latest
+          docker tag jaikumarm/iqfeed:v62025-w8 jaikumarm/iqfeed:latest
           docker push jaikumarm/iqfeed:latest
 
 workflows:
