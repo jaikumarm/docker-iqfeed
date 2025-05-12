@@ -1,4 +1,4 @@
-FROM ubuntu:kinetic
+FROM ubuntu:noble
 
 WORKDIR /root/
 ENV HOME /root
@@ -32,8 +32,9 @@ RUN \
 
 RUN \
     # Install winehq-stable    
-    wget -O - https://dl.winehq.org/wine-builds/winehq.key | apt-key add - && \
-    add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ kinetic main' && \
+    mkdir -pm755 /etc/apt/keyrings && \
+    wget -O - https://dl.winehq.org/wine-builds/winehq.key | gpg --dearmor -o /etc/apt/keyrings/winehq-archive.key - && \
+    wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/noble/winehq-noble.sources && \
     apt-get update && apt-get install -yq --no-install-recommends winehq-stable && \
     apt-get install -yq --no-install-recommends winbind winetricks cabextract && \
     wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && \
@@ -44,12 +45,16 @@ RUN \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
     # Init wine instance
-RUN winecfg && wineserver --wait
+RUN \
+    winecfg && wineserver --wait
     # Download iqfeed client
-RUN wget -nv http://www.iqfeed.net/$IQFEED_INSTALLER_BIN -O /root/$IQFEED_INSTALLER_BIN
+RUN \
+    wget -nv http://www.iqfeed.net/$IQFEED_INSTALLER_BIN -O /root/$IQFEED_INSTALLER_BIN
     # Install iqfeed client
-RUN xvfb-run -s -noreset -a wine64 /root/$IQFEED_INSTALLER_BIN /S && wineserver --wait
-RUN wine64 reg add HKEY_CURRENT_USER\\\Software\\\DTN\\\IQFeed\\\Startup /t REG_DWORD /v LogLevel /d $IQFEED_LOG_LEVEL /f && wineserver --wait
+RUN \
+    xvfb-run -s -noreset -a wine64 /root/$IQFEED_INSTALLER_BIN /S && wineserver --wait
+RUN \
+    wine64 reg add HKEY_CURRENT_USER\\\Software\\\DTN\\\IQFeed\\\Startup /t REG_DWORD /v LogLevel /d $IQFEED_LOG_LEVEL /f && wineserver --wait
 RUN \
     # Add pyiqfeed 
     git clone https://github.com/jaikumarm/pyiqfeed.git && \

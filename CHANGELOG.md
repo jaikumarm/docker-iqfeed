@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## 2025-05-11
+### Changed
+- updating base ubuntu image to noble (22.04)
+- updating wine from 8 to 10 stable, default on ubuntu noble
+- no change in IQFeed Client version still 6.2.0.25 
+- dockerhub image updated to jaikumarm/iqfeed:v62025-w10
+
 ## 2023-01-26
 ### Changed
 - updating wine 8 from devel to stable as wine 8 was release a couple of days ago and seems stable so far
